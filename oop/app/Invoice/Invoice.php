@@ -12,9 +12,25 @@ use Exception;
  */
 class Invoice
 {
+  private string $id;
+
   public function __construct(
-    private float $amout
+    private float $amount,
+    private string $description,
   ) {
+    $this->id = uniqid("invoice_");
+  }
+
+  // serialize & unserialize have some problems.
+  // serialize & unserialize have precedent to sleep & wakeup
+  // However, with these magic method, you can fully control how the object should be serialized
+  public function __sleep(): array
+  {
+    return ["id", "amount"];
+  }
+
+  public function __wakeup(): void
+  {
   }
 
   // public function __clone(): void

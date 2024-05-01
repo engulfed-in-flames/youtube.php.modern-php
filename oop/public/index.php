@@ -69,8 +69,15 @@ echo "Magic Method" . "<br/>";
 
 use Invoice\Invoice;
 
-$invoice = new Invoice(20);
+$invoice = new Invoice(25, "Hello, PHP!");
 
 // How to clone an original object?
 // $invoiceClone = clone $invoice;
 // or Using `clone` magic methid.
+
+// echo serialize($invoice) . "<br/>"; // NEVER EVER serialize untrusted data.
+// echo unserialize(serialize($invoice)) . "<br/>";
+
+// Do NOT use Serializable interface. It will be deprcated.
+// Instead, use `sleep` & `wakeup` magic method.
+echo serialize($invoice) . "<br/>";
