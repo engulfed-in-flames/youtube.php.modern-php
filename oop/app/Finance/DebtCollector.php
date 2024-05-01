@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Finance;
+namespace Finance;
 
 // Interface is meta data that class needs to has or implements
 

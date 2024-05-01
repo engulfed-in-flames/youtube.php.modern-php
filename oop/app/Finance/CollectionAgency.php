@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Finance;
+namespace Finance;
 
 // Can implement more than one interface.
 class CollectionAgency implements DebtCollector

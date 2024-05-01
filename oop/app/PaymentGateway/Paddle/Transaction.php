@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 // If you include data in a certain namespace, you cannot access to that data in global scope.
-namespace App\PaymentGateway\Paddle;
+namespace PaymentGateway\Paddle;
 
-use App\Enums\Status;
+use Enums\Status;
 
 class Transaction
 {

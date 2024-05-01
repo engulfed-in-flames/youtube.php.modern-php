@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Finance;
+namespace Finance;
 
 class DebtCollectionService
 {

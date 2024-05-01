@@ -20,14 +20,6 @@ function loadView(string $file = "", array $data = []): void
   requireFile($filePath, $data, $errorMessage);
 };
 
-function loadClass(string $file = ""): void
-{
-  $filePath = buildDirPath("classes") . $file . ".php";
-  $errorMessage = "Class file NOT found : {$filePath}";
-  requireFile($filePath, [], $errorMessage);
-}
-
-
 function buildDirPath(string ...$dirs): string
 {
   $root = __DIR__;

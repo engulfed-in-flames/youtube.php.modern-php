@@ -10,11 +10,9 @@ Also, the child class might have useless class member of parent.
 > Inheritance creates tight coupling between parent & child classes.
 
 One solution for this is overriding to throw Exception when that useless class member is used. (NOT Recommended)
-
-
 */
 
-namespace App\Toaster;
+namespace Toaster;
 
 // final class or final method cannot be modified or overrided
 // Fundamentally, final modifier is used for preventing inheritance .

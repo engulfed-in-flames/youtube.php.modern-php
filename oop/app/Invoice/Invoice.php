@@ -2,7 +2,7 @@
 
 // MAGIC METHOD
 
-namespace App\Invoice;
+namespace Invoice;
 
 use BadMethodCallException;
 use Exception;
@@ -16,6 +16,10 @@ class Invoice
     private float $amout
   ) {
   }
+
+  // public function __clone(): void
+  // {
+  // }
 
   /** @throws Exception Cannot allow to set class member outside the class */
   public function __set(string $prop, mixed $value): void

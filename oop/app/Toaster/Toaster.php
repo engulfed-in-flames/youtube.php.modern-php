@@ -2,7 +2,7 @@
 
 // Inheritance
 
-namespace App\Toaster;
+namespace Toaster;
 
 class Toaster
 {

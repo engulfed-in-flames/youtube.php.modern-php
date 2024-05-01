@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace Database;
 
 // 1. Database with singleton pattern
 // 2. ✅ DI is the best way to implement class.

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Toaster;
+namespace Toaster;
 
 // In "has a" relationship, better to use composition.
 class FancyOven

@@ -8,7 +8,11 @@ require_once "../helpers.php";
 // before throwing any errors, php looks for any reigstered autoloader functions and runs them one by one.
 spl_autoload_register(function ($class) {
   // var_dump("Autoloader 1");
-  $path = realpath(__DIR__ . "/../" . lcfirst(str_replace("\\", "/", $class)) . ".php");
+
+  // $prefix = "Foo\\Bar\\"; // project-specific namespace
+  // $baseDir = realpath(__DIR__ . "/../app") . "\\";
+  $baseDir = dirname(__DIR__) . "/app/";
+  $path = $baseDir . lcfirst(str_replace("\\", "/", $class)) . ".php";
 
   if (file_exists($path)) {
     require_once $path;
@@ -19,7 +23,7 @@ spl_autoload_register(function ($class) {
 //   var_dump("Autoloader 2");
 // }, prepend: true);
 
-use App\PaymentGateway\Paddle\Transaction;
+use PaymentGateway\Paddle\Transaction;
 
 $paddleTransaction = new Transaction();
 
@@ -41,9 +45,9 @@ inspect($reflectedProperty->getValue($transaction));
 
 echo "Inheritance" . "<br/>";
 
-use App\Toaster;
+use Toaster\ToasterPro;
 
-$toasterPro = new Toaster\ToasterPro();
+$toasterPro = new ToasterPro();
 
 $toasterPro->addSlice("bread");
 $toasterPro->addSlice("bread");
@@ -51,19 +55,22 @@ $toasterPro->addSlice("bread");
 // $toasterPro->toast();
 $toasterPro->toastBagel();
 
-
 echo "Interface" . "<br/>";
 
-use App\Finance;
+use Finance as F;
 
-$collector = new Finance\CollectionAgency();
-$service = new Finance\DebtCollectionService();
+$collector = new F\CollectionAgency();
+$service = new F\DebtCollectionService();
 
 echo $collector->collect(100) . "<br/>";
 echo $service->collectDebt($collector)  . "<br/>";
 
 echo "Magic Method" . "<br/>";
 
-use App\Invoice;
+use Invoice\Invoice;
 
-$invoice = new Invoice\Invoice(20);
+$invoice = new Invoice(20);
+
+// How to clone an original object?
+// $invoiceClone = clone $invoice;
+// or Using `clone` magic methid.
