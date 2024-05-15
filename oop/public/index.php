@@ -2,10 +2,16 @@
 
 declare(strict_types=1);
 
+use PaymentGateway\Paddle\Transaction;
+use Toaster\ToasterPro;
+use Finance as F;
+use Invoice\Invoice;
+use Invoice\InvoiceCollection;
+
 require_once "../helpers.php";
 
 // When you use or access a class, php will check the class exists or not. If class doesn't exists,
-// before throwing any errors, php looks for any reigstered autoloader functions and runs them one by one.
+// before throwing any errors, php looks for any registered autoloader functions and runs them one by one.
 spl_autoload_register(function ($class) {
   // var_dump("Autoloader 1");
 
@@ -22,8 +28,6 @@ spl_autoload_register(function ($class) {
 // spl_autoload_register(function ($_) {
 //   var_dump("Autoloader 2");
 // }, prepend: true);
-
-use PaymentGateway\Paddle\Transaction;
 
 $paddleTransaction = new Transaction();
 
@@ -43,9 +47,7 @@ $reflectedProperty->setAccessible(true);
 inspect($reflectedProperty->getValue($transaction));
 */
 
-echo "Inheritance" . "<br/>";
-
-use Toaster\ToasterPro;
+nextChapter("Inheritance");
 
 $toasterPro = new ToasterPro();
 
@@ -55,9 +57,7 @@ $toasterPro->addSlice("bread");
 // $toasterPro->toast();
 $toasterPro->toastBagel();
 
-echo "Interface" . "<br/>";
-
-use Finance as F;
+nextChapter("Interface");
 
 $collector = new F\CollectionAgency();
 $service = new F\DebtCollectionService();
@@ -65,26 +65,29 @@ $service = new F\DebtCollectionService();
 echo $collector->collect(100) . "<br/>";
 echo $service->collectDebt($collector)  . "<br/>";
 
-echo "Magic Method" . "<br/>";
-
-use Invoice\Invoice;
+nextChapter("Magic Method");
 
 $invoice = new Invoice(25, "Hello, PHP!");
 
 // How to clone an original object?
 // $invoiceClone = clone $invoice;
-// or Using `clone` magic methid.
+// or Using `clone` magic method.
 
-// echo serialize($invoice) . "<br/>"; // NEVER EVER serialize untrusted data.
+nextChapter("Serialize & Unserialize");
+
+// ❗ NEVER EVER serialize untrusted data.
+// ❗ Do NOT use Serializable interface. It will be deprecated.
+// ❗ Instead, use `sleep` & `wakeup` magic method.
+
+// echo serialize($invoice) . "<br/>"; 
 // echo unserialize(serialize($invoice)) . "<br/>";
 
-// Do NOT use Serializable interface. It will be deprcated.
-// Instead, use `sleep` & `wakeup` magic method.
+
 echo serialize($invoice) . "<br/>";
 
-echo "Error Handling in OOP" . "<br/>";
+nextChapter("Error Handling in OOP");
 
-echo "DateTime in OOP" . "<br/>";
+nextChapter("DateTime in OOP");
 
 $dateTime = new DateTime("tomorrow 3:35pm");
 inspect($dateTime);
@@ -116,4 +119,26 @@ $period = new DatePeriod(new DateTime("05/01/2023"), new DateInterval("P1D"), 4,
 // $period is not array
 foreach ($period as $date) {
   inspect($date->format("m/d/Y"));
+}
+
+nextChapter("Iterators & Iterable Type");
+
+(function () {
+  $invoices = new InvoiceCollection(
+    new Invoice(25),
+    new Invoice(50),
+    new Invoice(75),
+  );
+
+  foreach ($invoices as $invoice) {
+    inspect($invoice);
+  }
+})();
+
+
+function nextChapter(string $chapter): void
+{
+  echo "////////////////////" . "<br/>";
+  echo $chapter . "<br/>";
+  echo "<br/>";
 }

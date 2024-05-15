@@ -16,7 +16,7 @@ class Invoice
 
   public function __construct(
     private float $amount,
-    private string $description,
+    private string $description = "",
   ) {
     $this->id = uniqid("invoice_");
   }
