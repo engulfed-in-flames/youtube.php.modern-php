@@ -10,18 +10,29 @@ class Router
 {
   private array $routes;
 
-  public function register(string $route, callable|array $action): self
+  public function register(string $route, callable|array $action, string $method): self
   {
-    $this->routes[$route] = $action;
+    $lcMethod = strtolower($method);
+    $this->routes[$lcMethod][$route] = $action;
 
     return $this;
   }
 
-  // Parse the request URI and call the appropriate action
-  public function resolve(string $uri)
+  public function get(string $route, callable|array $action): self
   {
-    $route = explode("?", $uri)[0];
-    $action = $this->routes[$route] ?? null;
+    return $this->register($route, $action, "get");
+  }
+
+  public function post(string $route, callable|array $action): self
+  {
+    return $this->register($route, $action, "post");
+  }
+  // Parse the request URI and call the appropriate action
+  public function resolve(string $requestUri, string $requestMethod)
+  {
+    $lcRequestMethod = strtolower($requestMethod);
+    $route = explode("?", $requestUri)[0];
+    $action = $this->routes[$lcRequestMethod][$route] ?? null;
 
     if (is_callable($action)) {
       // If there is a return value, return it

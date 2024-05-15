@@ -13,6 +13,21 @@ class Invoice
 
   public function create(): string
   {
-    return "Create Invoice";
+    $html = <<<HTML
+      <form action="/invoices/create" method="post">
+        <div>
+          <label>Amount</label>
+          <input type="text" name="amount" placeholder="Amount">
+        </div>
+        <button type="submit">Create</button>
+      </form>
+    HTML;
+
+    return $html;
+  }
+
+  public function store()
+  {
+    $amount = $_POST["amount"];
   }
 }

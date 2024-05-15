@@ -18,8 +18,17 @@ $router = new App\Router();
 // });
 
 $router
-  ->register("/", [App\Classes\Home::class, "index"])
-  ->register("/invoices", [App\Classes\Invoice::class, "index"])
-  ->register("/invoices/create", [App\Classes\Invoice::class, "create"]);
+  ->get("/", [App\Classes\Home::class, "index"])
+  ->get("/invoices", [App\Classes\Invoice::class, "index"])
+  ->get("/invoices/create", [App\Classes\Invoice::class, "create"])
+  ->post("/invoices/create", [App\Classes\Invoice::class, "store"]);
 
-echo $router->resolve($_SERVER["REQUEST_URI"]);
+// session_start must be called before any output (including rendering).
+// If output_buffering turned on in php.ini, some cases will work without calling session_start. 
+// By default, output_buffering must be turned off.
+
+// session_start() create a new session or resume the existing session.
+// You can check session id in Application's Cookies tab. 
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+
+echo $router->resolve($_SERVER["REQUEST_URI"], $_SERVER["REQUEST_METHOD"]);
