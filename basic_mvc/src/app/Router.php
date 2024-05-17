@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-loadClass("src/Exceptions/RouteNotFoundException");
+use App\Exceptions;
 
 class Router
 {

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @param string $path "path/to/class" without ".php"
+ * @param string $path "path/to/view/from/root" without ".php"
  * @return void
  */
-function loadClass($path)
+function load($path)
 {
   $cleanPath = str_replace("\\", DIRECTORY_SEPARATOR, $path);
   $fullPath = realpath(__DIR__ . DIRECTORY_SEPARATOR . $cleanPath . ".php");
