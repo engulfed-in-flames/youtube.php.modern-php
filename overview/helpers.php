@@ -1,42 +1,71 @@
 <?php
-function loadApp(string $file = ""): void
+function loadApp(): void
 {
-  $filePath = buildDirPath("app") . $file . ".php";
-  $errorMessage = "App file NOT found : {$filePath}";
+  $file = "App";
+  $filePath = buildFilePath("app", $file);
+  $errorMessage = "File NOT found : {$filePath}";
+
   requireFile($filePath, [], $errorMessage);
 }
 
-function loadConfig(string $file = ""): void
+function loadConfig(): void
 {
-  $filePath = buildDirPath("app", "config") . $file . ".php";
-  $errorMessage = "Config file NOT found : {$filePath}";
+  $file = "config";
+  $filePath = buildFilePath("config", $file);
+  $errorMessage = "Config NOT found : {$filePath}";
+
   requireFile($filePath, [], $errorMessage);
 };
-function loadView(string $file = "", array $data = []): void
+
+function loadView(string $file, array $data = []): void
 {
-  $filePath = buildDirPath("app", "views") . $file . ".php";
-  $errorMessage = "View file NOT found : {$filePath}";
+  $filePath = buildFilePath("view", $file);
+  $errorMessage = "View NOT found : {$filePath}";
+
   requireFile($filePath, $data, $errorMessage);
 };
 
+function buildFilePath(string $type, string $file): string
+{
+  $folders = [
+    "view" => "views",
+    "config" => "config",
+    "app" => "app",
+  ];
+
+  if (!array_key_exists($type, $folders)) {
+    throw new InvalidArgumentException("Folder type {$type} doesn't exist.");
+  }
+
+  $folderName = $folders[$type];
+  return buildDirPath("app", $folderName) . DIRECTORY_SEPARATOR . $file . ".php";
+}
 
 function buildDirPath(string ...$dirs): string
 {
   $root = __DIR__;
   array_unshift($dirs, $root);
-  $dirPath = implode(DIRECTORY_SEPARATOR, $dirs) . DIRECTORY_SEPARATOR;
+  $dirPath = implode(DIRECTORY_SEPARATOR, $dirs);
   // `realpath` prevents directory traversal attack.
   return realpath($dirPath) ? realpath($dirPath) . DIRECTORY_SEPARATOR : $dirPath;
 }
 
+function includeFile(string $filePath, array $data = [], string $errorMessage = "File Not Found"): void
+{
+  if (!file_exists($filePath)) return;
+
+  extract($data);
+  include_once $filePath;
+}
+
 function requireFile(string $filePath, array $data = [], string $errorMessage = "File NOT found"): void
 {
-  if (file_exists($filePath)) {
-    extract($data);
-    require_once $filePath;
-  } else {
-    throw new Exception("{$errorMessage} : {$filePath}");
+  if (!file_exists($filePath)) {
+    throw new RuntimeException("{$errorMessage} : {$filePath}");
   }
+
+  extract($data);
+  require_once $filePath;
 }
 
 function formatDollarAmount(int|float $amount): string
@@ -45,7 +74,7 @@ function formatDollarAmount(int|float $amount): string
   return ($isNegative ? "-" : "") . "$" . number_format(abs($amount), 2);
 }
 
-function  formatDate(string $date): string
+function formatDate(string $date): string
 {
   return date("M j, Y", strtotime($date));
 }

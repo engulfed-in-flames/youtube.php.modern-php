@@ -19,10 +19,11 @@ function getTransactions(string $filePath, ?callable $transactionHandler = null)
   if (!file_exists($filePath)) trigger_error("The file path({$filePath}) " . "does not exist" . E_USER_ERROR);
 
   $file = fopen($filePath, "r");
-
-  fgetcsv($file); // Discard the first line
-
   $transactions = [];
+
+  // Discard the first line
+  fgetcsv($file);
+
   while (($transaction = fgetcsv($file)) !== false) {
     if (is_callable($transactionHandler)) {
       $transaction = $transactionHandler($transaction);
@@ -31,6 +32,7 @@ function getTransactions(string $filePath, ?callable $transactionHandler = null)
   }
 
   fclose($file);
+
   return $transactions;
 }
 
