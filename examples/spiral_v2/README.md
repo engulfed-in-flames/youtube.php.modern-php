@@ -7,6 +7,16 @@
 
 特に参考にした PHP フレームワークは**Laravel**です。選定理由は、Laravel が PHP フレームワークの中でも一番モダンウェブ開発のやり方に近いし、使用頻度が高いからです。
 
+# ルール
+
+1. できるだけ、クラス内に`SPIRAL`グローバル変数は使用しない事. 代わりに、Dependency Injection、又は、Composition を考慮
+2.
+
+# 役に立つ記事
+
+-   [PHP Performance Tuning: A Comprehensive Guide](https://accesto.com/blog/php-performance-tuning/)
+-   [Why Is require_once So Bad to Use?](https://stackoverflow.com/questions/186338/why-is-require-once-so-bad-to-use)
+
 ## ディレクトリ構造
 
 '()'内の内容はコメントです。
